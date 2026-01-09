@@ -70,6 +70,9 @@ $utilisateurs = $stmt->fetchAll(PDO::FETCH_OBJ);
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+
+<?php include('navbar.php'); ?>
+
 <div class="container mt-4">
 
 <h1 class="mb-4 text-center">Gestion des utilisateurs</h1>

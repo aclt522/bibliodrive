@@ -101,5 +101,3 @@ if (isset($_SESSION['mel'])) {
     La Bibliothèque de Moulinsart est fermée au public jusqu'à nouvel ordre.
     Mais il vous est possible d'emprunter nos livres via notre service Biblio Drive.
 </div>
-
-

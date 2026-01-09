@@ -30,7 +30,7 @@ if (!$user) return;
         <li><strong>Code postal :</strong> <?= htmlspecialchars($user['codepostal']) ?></li>
         <li><strong>Adresse :</strong> <?= htmlspecialchars($user['adresse']) ?></li>
         <li>
-            <strong>Profil :</strong>
+            <strong>Profil:</strong>
             <span class="badge <?= $user['profil']==='admin'?'bg-danger':'bg-primary'?>">
                 <?= htmlspecialchars($user['profil']) ?>
             </span>
