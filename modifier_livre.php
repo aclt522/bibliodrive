@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once('connexion.php');
-
 require_once('securite_admin.php');
 
 // Vérifie si un livre est sélectionné
@@ -83,64 +82,62 @@ if(isset($_POST['modifier'])) {
 <meta charset="UTF-8">
 <title>Modifier un livre - Bibliodrive</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-.book-img { width: 150px; height: 220px; object-fit: cover; margin-bottom: 15px; }
-</style>
+<link rel="stylesheet" href="css/modifier_livre.css">
 </head>
 <body>
 <div class="container mt-5">
 
-<h1 class="mb-4 text-center">Modifier le livre</h1>
+    <h1>Modifier le livre</h1>
 
-<?= $message ?>
+    <?= $message ?>
 
-<form method="POST" enctype="multipart/form-data" class="mx-auto" style="max-width: 600px;">
-    <!-- Image actuelle -->
-    <div class="text-center">
-        <img src="<?= (!empty($livre->photo) && file_exists('covers/'.$livre->photo)) ? 'covers/'.$livre->photo : 'covers/default.jpg' ?>" class="book-img" alt="Livre">
-    </div>
-    
-    <div class="mb-3">
-        <label class="form-label">Titre</label>
-        <input type="text" name="titre" class="form-control" value="<?= htmlspecialchars($livre->titre) ?>" required>
-    </div>
-    
-    <div class="mb-3">
-        <label class="form-label">Auteur</label>
-        <select name="auteur" class="form-select" required>
-            <?php foreach($authors as $a): ?>
-                <option value="<?= $a->noauteur ?>" <?= ($a->noauteur == $livre->noauteur) ? 'selected' : '' ?>>
-                    <?= htmlspecialchars($a->prenom . ' ' . $a->nom) ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    
-    <div class="mb-3">
-        <label class="form-label">Année de parution</label>
-        <input type="number" name="anneeparution" class="form-control" value="<?= htmlspecialchars($livre->anneeparution) ?>" required>
-    </div>
-    
-    <div class="mb-3">
-        <label class="form-label">ISBN</label>
-        <input type="text" name="isbn13" class="form-control" value="<?= htmlspecialchars($livre->isbn13) ?>" required>
-    </div>
-    
-    <div class="mb-3">
-        <label class="form-label">Détails</label>
-        <textarea name="detail" class="form-control" rows="4"><?= htmlspecialchars($livre->detail) ?></textarea>
-    </div>
-    
-    <div class="mb-3">
-        <label class="form-label">Changer l'image</label>
-        <input type="file" name="photo" class="form-control">
-    </div>
-    
-    <div class="d-flex justify-content-between">
-        <a href="gere_les_livres.php" class="btn btn-secondary">← Retour à la liste des livres</a>
-        <button type="submit" name="modifier" class="btn btn-primary">Modifier le livre</button>
-    </div>
-</form>
+    <form method="POST" enctype="multipart/form-data" class="mx-auto form-container">
+        <!-- Image actuelle -->
+        <div class="text-center mb-3">
+            <img src="<?= (!empty($livre->photo) && file_exists('covers/'.$livre->photo)) ? 'covers/'.$livre->photo : 'covers/default.jpg' ?>" class="book-img" alt="Livre">
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Titre</label>
+            <input type="text" name="titre" class="form-control" value="<?= htmlspecialchars($livre->titre) ?>" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Auteur</label>
+            <select name="auteur" class="form-select" required>
+                <?php foreach($authors as $a): ?>
+                    <option value="<?= $a->noauteur ?>" <?= ($a->noauteur == $livre->noauteur) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($a->prenom . ' ' . $a->nom) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Année de parution</label>
+            <input type="number" name="anneeparution" class="form-control" value="<?= htmlspecialchars($livre->anneeparution) ?>" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">ISBN</label>
+            <input type="text" name="isbn13" class="form-control" value="<?= htmlspecialchars($livre->isbn13) ?>" required>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Détails</label>
+            <textarea name="detail" class="form-control" rows="4"><?= htmlspecialchars($livre->detail) ?></textarea>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Changer l'image</label>
+            <input type="file" name="photo" class="form-control">
+        </div>
+        
+        <div class="d-flex justify-content-between">
+            <a href="gere_les_livres.php" class="btn btn-secondary btn-return">← Retour à la liste des livres</a>
+            <button type="submit" name="modifier" class="btn btn-primary">Modifier le livre</button>
+        </div>
+    </form>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

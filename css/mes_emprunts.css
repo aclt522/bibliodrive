@@ -1,0 +1,25 @@
+.book-img {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.text-success { font-weight: bold; }
+.text-danger { font-weight: bold; }
+
+@media (max-width: 576px) {
+    .book-img {
+        width: 70px;
+        height: 105px;
+    }
+
+    .table {
+        font-size: 0.9rem;
+    }
+}

@@ -2,6 +2,7 @@
 session_start();
 require_once('connexion.php');
 
+// Vérifie que l'utilisateur est connecté
 if (!isset($_SESSION['mel'])) {
     header('Location: login.php');
     exit();
@@ -69,11 +70,12 @@ if (isset($_GET['valider']) && !$limiteAtteinte && !empty($panier)) {
             }
         }
 
+        // Vider le panier
         $_SESSION['panier'] = [];
-        $message = "<div class='alert alert-success text-center'>✅ Emprunt validé (retour sous 14 jours)</div>";
+        $message = "<div class='alert alert-success'>✅ Emprunt validé (retour sous 14 jours)</div>";
 
     } else {
-        $message = "<div class='alert alert-danger text-center'>❌ Limite de 5 emprunts atteinte</div>";
+        $message = "<div class='alert alert-danger'>❌ Limite de 5 emprunts atteinte</div>";
     }
 }
 
@@ -81,7 +83,6 @@ if (isset($_GET['valider']) && !$limiteAtteinte && !empty($panier)) {
 // Récupérer les livres du panier
 // =============================
 $livresPanier = [];
-
 if (!empty($panier)) {
     $in = implode(',', array_map('intval', $panier));
     $stmt = $connexion->query("
@@ -97,87 +98,82 @@ if (!empty($panier)) {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Panier</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Panier - Bibliodrive</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/panier.css">
 </head>
 <body>
 
+<?php include('navbar.php'); ?>
+
 <div class="container mt-4">
 
-<h1 class="text-center mb-4">🛒 Votre panier</h1>
+    <h1 class="text-center mb-4">🛒 Votre panier</h1>
 
-<?= $message ?>
+    <?= $message ?>
 
-<?php if (!empty($livresPanier)): ?>
+    <?php if (!empty($livresPanier)): ?>
+    
+        <!-- Tableau des livres dans le panier -->
+        <div class="table-responsive">
+            <table class="table table-striped text-center">
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                        <th>Année</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($livresPanier as $livre): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($livre->titre) ?></td>
+                        <td><?= htmlspecialchars($livre->prenom . ' ' . $livre->nom) ?></td>
+                        <td><?= htmlspecialchars($livre->anneeparution) ?></td>
+                        <td>
+                            <a href="panier.php?annuler=<?= $livre->nolivre ?>" class="btn btn-danger btn-sm">Annuler</a>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
 
-<table class="table table-striped text-center">
-<thead>
-<tr>
-    <th>Titre</th>
-    <th>Auteur</th>
-    <th>Année</th>
-    <th>Action</th>
-</tr>
-</thead>
-<tbody>
-<?php foreach ($livresPanier as $livre): ?>
-<tr>
-    <td><?= htmlspecialchars($livre->titre) ?></td>
-    <td><?= htmlspecialchars($livre->prenom . ' ' . $livre->nom) ?></td>
-    <td><?= htmlspecialchars($livre->anneeparution) ?></td>
-    <td>
-        <a href="panier.php?annuler=<?= $livre->nolivre ?>" class="btn btn-danger btn-sm">
-            Annuler
-        </a>
-    </td>
-</tr>
-<?php endforeach; ?>
-</tbody>
-</table>
+        <!-- Boutons d'action -->
+        <div class="d-flex justify-content-between flex-wrap mt-3">
+            <a href="index.php" class="btn btn-secondary">← Accueil</a>
+            
+            <?php if ($limiteAtteinte): ?>
+                <button class="btn btn-danger" disabled>❌ Limite d’emprunts atteinte</button>
+            <?php else: ?>
+                <a href="panier.php?valider=1" class="btn btn-success">✅ Valider le panier</a>
+            <?php endif; ?>
+        </div>
 
-<div class="d-flex justify-content-between">
-    <a href="index.php" class="btn btn-secondary">← Accueil</a>
-
-    <?php if ($limiteAtteinte): ?>
-        <button class="btn btn-danger" disabled>
-            ❌ Limite d’emprunts atteinte
-        </button>
     <?php else: ?>
-        <a href="panier.php?valider=1" class="btn btn-success">
-            ✅ Valider le panier
-        </a>
+    
+        <p class="text-center mt-3">Votre panier est vide.</p>
+
+        <div class="d-flex justify-content-center gap-2 mt-2 flex-wrap">
+            <a href="index.php" class="btn btn-secondary">← Accueil</a>
+            
+            <?php if ($limiteAtteinte): ?>
+                <button class="btn btn-danger" disabled>❌ Limite d’emprunts atteinte</button>
+            <?php else: ?>
+                <a href="liste_des_livres.php" class="btn btn-primary">📚 Emprunter des livres</a>
+            <?php endif; ?>
+        </div>
+
     <?php endif; ?>
-</div>
 
-<?php else: ?>
-
-<p class="text-center">Votre panier est vide.</p>
-
-<div class="d-flex justify-content-center gap-2">
-    <a href="index.php" class="btn btn-secondary">← Accueil</a>
-
-    <?php if ($limiteAtteinte): ?>
-        <button class="btn btn-danger" disabled>
-            ❌ Limite d’emprunts atteinte
-        </button>
-    <?php else: ?>
-        <a href="liste_des_livres.php" class="btn btn-primary">
-            📚 Emprunter des livres
-        </a>
+    <!-- Bouton toujours accessible pour voir ses emprunts -->
+    <?php if ($hasEmprunts): ?>
+        <div class="text-center mt-4">
+            <a href="mes_emprunts.php" class="btn btn-info">📖 Voir mes emprunts</a>
+        </div>
     <?php endif; ?>
-</div>
-
-<?php endif; ?>
-
-<!-- Bouton TOUJOURS accessible -->
-<?php if ($hasEmprunts): ?>
-<div class="text-center mt-4">
-    <a href="mes_emprunts.php" class="btn btn-info">
-        📖 Voir mes emprunts
-    </a>
-</div>
-<?php endif; ?>
 
 </div>
 

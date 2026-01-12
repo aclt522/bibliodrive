@@ -1,0 +1,147 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+    margin-bottom: 50px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+table.table {
+    text-align: center;
+    vertical-align: middle;
+}
+
+table.table th {
+    background-color: #000 !important;
+    color: #fff !important;
+    text-transform: uppercase;
+}
+
+table.table td img.book-img {
+    width: 80px;
+    height: 120px;
+    object-fit: cover;
+}
+
+.search-form {
+    width: 400px;
+    height: 38px;
+    padding: 0 15px;
+}
+
+.btn-search {
+    height: 38px;
+}
+
+.card .book-img {
+    width: 150px;
+    height: 220px;
+    object-fit: cover;
+    margin: 0 auto 15px auto;
+}
+
+.card-body {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-label {
+    font-weight: bold;
+}
+
+.btn-return, .btn-add {
+    margin: 0 0.3rem;
+}
+
+.btn-sm {
+    margin: 0 0.1rem;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-success {
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+}
+
+.alert {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.modal-body img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.row-cols-1.row-cols-md-3 {
+    justify-content: center;
+}
+
+.card {
+    height: 100%;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.text-success {
+    font-weight: bold;
+    color: #198754 !important;
+}
+
+.text-danger {
+    font-weight: bold;
+    color: #dc3545 !important;
+}
+
+@media (max-width: 768px) {
+    .search-form {
+        width: 100%;
+    }
+    .btn-search {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-body {
+        font-size: 0.9rem;
+    }
+    .book-img {
+        width: 120px;
+        height: 180px;
+    }
+}

@@ -1,0 +1,144 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: 600;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+.alert {
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 0.95rem;
+}
+
+table {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+thead th {
+    background-color: #212529;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+tbody td {
+    vertical-align: middle;
+}
+
+.btn {
+    border-radius: 25px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.book-img {
+    width: 150px;
+    height: 220px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.card-body {
+    text-align: center;
+}
+
+.card .btn {
+    width: 100%;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+input.form-control,
+select.form-select,
+textarea.form-control {
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+}
+
+.dropdown-menu p, 
+.dropdown-menu li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.dropdown-menu .badge {
+    font-size: 0.85rem;
+    padding: 0.3em 0.6em;
+}
+
+.carousel-inner img {
+    max-height: 400px;
+    object-fit: contain;
+}
+
+.carousel-caption {
+    background: rgba(0,0,0,0.4);
+    border-radius: 8px;
+    padding: 5px 10px;
+}
+
+@media (max-width: 768px) {
+    .book-img {
+        width: 120px;
+        height: 180px;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    .carousel-inner img {
+        max-height: 250px;
+    }
+}
+
+@media (max-width: 576px) {
+    table thead {
+        display: none;
+    }
+
+    table, table tbody, table tr, table td {
+        display: block;
+        width: 100%;
+    }
+
+    table tr {
+        margin-bottom: 15px;
+    }
+
+    table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: calc(50% - 30px);
+        font-weight: bold;
+        text-align: left;
+    }
+}

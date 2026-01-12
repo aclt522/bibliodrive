@@ -1,6 +1,5 @@
 <?php
 require_once('connexion.php');
-
 require_once('securite_admin.php');
 
 $message = "";
@@ -18,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $photo = null;
 
     if (!$titre || !$isbn13 || !$anneeparution || !$resume) {
-        $message = "<div class='alert alert-danger'>Veuillez remplir tous les champs obligatoires.</div>";
+        $message = "<div class='alert alert-danger text-center'>Veuillez remplir tous les champs obligatoires.</div>";
     } else {
         // Ajout du nouvel auteur si fourni
         if ($nouveau_auteur) {
@@ -60,9 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bindValue(':dateajout', $dateajout);
 
         if ($stmt->execute()) {
-            $message = "<div class='alert alert-success'>📚 Livre ajouté avec succès !</div>";
+            $message = "<div class='alert alert-success text-center'>📚 Livre ajouté avec succès !</div>";
         } else {
-            $message = "<div class='alert alert-danger'>❌ Erreur lors de l'ajout du livre.</div>";
+            $message = "<div class='alert alert-danger text-center'>❌ Erreur lors de l'ajout du livre.</div>";
         }
     }
 }
@@ -78,10 +77,11 @@ $auteurs = $auteursStmt->fetchAll(PDO::FETCH_OBJ);
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Ajouter un livre</title>
+    <title>Ajouter un livre - Bibliodrive</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/ajouter_un_livre.css">
 </head>
 <body>
 
@@ -90,7 +90,7 @@ $auteurs = $auteursStmt->fetchAll(PDO::FETCH_OBJ);
 <div class="container mt-5">
     <h1 class="text-center mb-4">Ajouter un livre</h1>
 
-   <!-- Bouton retour -->
+    <!-- Bouton retour -->
     <div class="mb-3">
         <a href="page_admin.php" class="btn btn-secondary">
             ← Retour à l'administration
@@ -100,18 +100,22 @@ $auteurs = $auteursStmt->fetchAll(PDO::FETCH_OBJ);
     <?= $message ?>
 
     <form method="POST" enctype="multipart/form-data" class="row g-3">
+
         <div class="col-md-6">
             <label class="form-label">Titre *</label>
             <input type="text" class="form-control" name="titre" required>
         </div>
+
         <div class="col-md-6">
             <label class="form-label">ISBN13 *</label>
             <input type="text" class="form-control" name="isbn13" required>
         </div>
+
         <div class="col-md-6">
             <label class="form-label">Année de parution *</label>
             <input type="number" class="form-control" name="anneeparution" required>
         </div>
+
         <div class="col-md-6">
             <label class="form-label">Auteur existant</label>
             <select class="form-select" name="auteur">
@@ -123,21 +127,26 @@ $auteurs = $auteursStmt->fetchAll(PDO::FETCH_OBJ);
                 <?php endforeach; ?>
             </select>
         </div>
+
         <div class="col-12">
             <label class="form-label">Ou ajouter un nouvel auteur</label>
             <input type="text" class="form-control" name="nouveau_auteur" placeholder="Prénom Nom">
         </div>
+
         <div class="col-12">
             <label class="form-label">Résumé *</label>
             <textarea class="form-control" name="resume" rows="5" required></textarea>
         </div>
+
         <div class="col-md-6">
             <label class="form-label">Image de couverture</label>
             <input type="file" class="form-control" name="photo" accept="image/jpeg, image/png">
         </div>
+
         <div class="col-12">
             <button type="submit" class="btn btn-primary w-100 py-2">Ajouter le livre</button>
         </div>
+
     </form>
 </div>
 

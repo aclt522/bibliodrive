@@ -22,19 +22,19 @@ if(isset($_GET['ajouter']) && isset($_SESSION['mel'])) {
     if($empruntsEncours + count($_SESSION['panier']) < 5) {
         if(!in_array($idAjouter, $_SESSION['panier'])) {
             $_SESSION['panier'][] = $idAjouter;
-            $messagePanier = "<div class='alert alert-success text-center mt-3'>✅ Livre ajouté au panier avec succès !</div>";
+            $messagePanier = "<div class='alert alert-success'>✅ Livre ajouté au panier avec succès !</div>";
         } else {
-            $messagePanier = "<div class='alert alert-warning text-center mt-3'>⚠️ Ce livre est déjà dans votre panier.</div>";
+            $messagePanier = "<div class='alert alert-warning'>⚠️ Ce livre est déjà dans votre panier.</div>";
         }
     } else {
-        $messagePanier = "<div class='alert alert-danger text-center mt-3'>❌ Vous ne pouvez pas emprunter plus de 5 livres à la fois.</div>";
+        $messagePanier = "<div class='alert alert-danger'>❌ Vous ne pouvez pas emprunter plus de 5 livres à la fois.</div>";
     }
 }
 
 // =============================
 // RECHERCHE DES LIVRES
 // =============================
-$search = isset($_GET['search']) ? $_GET['search'] : '';
+$search = $_GET['search'] ?? '';
 
 if ($search) {
     $stmt = $connexion->prepare("
@@ -68,43 +68,37 @@ $livres = $stmt->fetchAll(PDO::FETCH_OBJ);
 <meta charset="UTF-8">
 <title>Liste des livres</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-.book-img { width: 150px; height: 220px; object-fit: cover; margin: 0 auto; }
-.card-body { text-align: center; }
-</style>
+<link rel="stylesheet" href="css/liste_des_livres.css">
 </head>
 <body>
+
 <?php include('navbar.php'); ?>
+
 <div class="container mt-4">
 
-    <h1 class="mb-4 text-center">Liste des livres</h1>
-
+    <h1>Liste des livres</h1>
 
     <!-- Message d'ajout au panier -->
     <?= $messagePanier ?>
 
     <!-- Bouton retour -->
     <div class="d-flex justify-content-center mb-3">
-        <a href="index.php" class="btn btn-secondary">← Retour à l'accueil</a>
+        <a href="index.php" class="btn btn-secondary btn-return">← Retour à l'accueil</a>
     </div>
 
-   <!-- Barre de recherche -->
-<div class="d-flex justify-content-center mb-4">
-    <form method="GET" class="d-flex align-items-center" role="search">
+    <!-- Barre de recherche -->
+    <form method="GET" class="d-flex align-items-center justify-content-center mb-4" role="search">
         <input
             type="search"
             name="search"
-            class="form-control me-3 rounded-pill"
+            class="form-control me-3 rounded-pill search-form"
             placeholder="Rechercher un livre..."
             value="<?= htmlspecialchars($search) ?>"
-            style="max-width: 400px; height: 38px; padding: 0 15px;"
         >
-        <button type="submit" class="btn btn-outline-primary rounded-pill px-4" style="height: 38px;">
+        <button type="submit" class="btn btn-outline-primary rounded-pill btn-search">
             🔍
         </button>
     </form>
-</div>
-
 
     <!-- Liste des livres -->
     <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
