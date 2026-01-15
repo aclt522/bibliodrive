@@ -26,8 +26,8 @@
                 </div>
             </main>
 
-        </div> <!-- fin row -->
-    </div> <!-- fin container-fluid -->
+        </div>
+    </div> 
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
