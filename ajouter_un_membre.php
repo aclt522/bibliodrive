@@ -1,6 +1,5 @@
 <?php
 require_once('connexion.php');
-
 require_once('securite_admin.php');
 
 $message = "";
@@ -9,7 +8,6 @@ $message = "";
 // TRAITEMENT DU FORMULAIRE
 // =============================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupération sécurisée des champs
     $mel = $_POST['mel'] ?? '';
     $motdepasse = $_POST['motdepasse'] ?? '';
     $nom = $_POST['nom'] ?? '';
@@ -27,10 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->rowCount() > 0) {
         $message = "<div class='alert alert-danger'>❌ Cet email est déjà utilisé.</div>";
     } else {
-        // Hachage du mot de passe
         $motdepasse_hash = password_hash($motdepasse, PASSWORD_DEFAULT);
 
-        // Insertion dans la BDD
         $stmt = $connexion->prepare("
             INSERT INTO utilisateur (mel, motdepasse, nom, prenom, adresse, ville, codepostal, profil)
             VALUES (:mel, :motdepasse, :nom, :prenom, :adresse, :ville, :codepostal, :profil)
@@ -57,11 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Ajouter un membre</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Ajouter un membre</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -70,11 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="container mt-5">
     <h1 class="text-center mb-4">Ajouter un membre</h1>
 
-       <!-- Bouton retour -->
     <div class="mb-3">
-        <a href="page_admin.php" class="btn btn-secondary">
-            ← Retour à l'administration
-        </a>
+        <a href="page_admin.php" class="btn btn-secondary">← Retour à l'administration</a>
     </div>
 
     <?= $message ?>

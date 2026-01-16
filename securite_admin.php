@@ -7,3 +7,4 @@ if (!isset($_SESSION['profil']) || $_SESSION['profil'] !== 'admin') {
     header('Location: index.php');
     exit();
 }
+?>

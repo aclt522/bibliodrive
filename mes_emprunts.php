@@ -29,13 +29,14 @@ $emprunts = $stmt->fetchAll(PDO::FETCH_OBJ);
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Mes emprunts</title>
+<title>Mes emprunts - Bibliodrive</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-.book-img { width: 100px; height: 150px; object-fit: cover; }
-</style>
+<link rel="stylesheet" href="css/mes_emprunts.css">
 </head>
 <body>
+
+<?php include('navbar.php'); ?>
+
 <div class="container mt-4">
 
     <h1 class="mb-3 text-center">Mes emprunts</h1>
@@ -46,42 +47,46 @@ $emprunts = $stmt->fetchAll(PDO::FETCH_OBJ);
     </div>
 
     <?php if (!empty($emprunts)): ?>
-    <table class="table table-striped text-center align-middle">
-        <thead>
-            <tr>
-                <th>Livre</th>
-                <th>Auteur</th>
-                <th>Année</th>
-                <th>Date d'emprunt</th>
-                <th>Date de retour</th>
-                <th>Statut</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($emprunts as $e): ?>
-            <tr>
-                <td>
-                    <img src="<?= (!empty($e->photo) && file_exists('covers/'.$e->photo)) ? 'covers/'.$e->photo : 'covers/default.jpg' ?>" class="book-img mb-1" alt="<?= htmlspecialchars($e->titre) ?>"><br>
-                    <?= htmlspecialchars($e->titre) ?>
-                </td>
-                <td><?= htmlspecialchars($e->prenom . ' ' . $e->nom) ?></td>
-                <td><?= htmlspecialchars($e->anneeparution) ?></td>
-                <td><?= date('d/m/Y', strtotime($e->dateemprunt)) ?></td>
-                <td><?= date('d/m/Y', strtotime($e->dateretour)) ?></td>
-                <td>
-                    <?php if (strtotime($e->dateretour) >= time()): ?>
-                        <span class="text-success">En cours</span>
-                    <?php else: ?>
-                        <span class="text-danger">Retourné / Expiré</span>
-                    <?php endif; ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped text-center align-middle">
+            <thead>
+                <tr>
+                    <th>Livre</th>
+                    <th>Auteur</th>
+                    <th>Année</th>
+                    <th>Date d'emprunt</th>
+                    <th>Date de retour</th>
+                    <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($emprunts as $e): ?>
+                <tr>
+                    <td>
+                        <img src="<?= (!empty($e->photo) && file_exists('covers/'.$e->photo)) ? 'covers/'.$e->photo : 'covers/default.jpg' ?>" 
+                             class="book-img mb-1" 
+                             alt="<?= htmlspecialchars($e->titre) ?>"><br>
+                        <?= htmlspecialchars($e->titre) ?>
+                    </td>
+                    <td><?= htmlspecialchars($e->prenom . ' ' . $e->nom) ?></td>
+                    <td><?= htmlspecialchars($e->anneeparution) ?></td>
+                    <td><?= date('d/m/Y', strtotime($e->dateemprunt)) ?></td>
+                    <td><?= date('d/m/Y', strtotime($e->dateretour)) ?></td>
+                    <td>
+                        <?php if (strtotime($e->dateretour) >= time()): ?>
+                            <span class="text-success">En cours</span>
+                        <?php else: ?>
+                            <span class="text-danger">Retourné / Expiré</span>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 
     <?php else: ?>
-    <p class="text-center">Vous n'avez aucun emprunt pour le moment.</p>
+    <p class="text-center mt-3">Vous n'avez aucun emprunt pour le moment.</p>
     <?php endif; ?>
 
 </div>

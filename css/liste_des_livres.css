@@ -1,0 +1,14 @@
+h1,
+table,
+.card-body,
+.alert {
+    text-align: center;
+}
+
+.book-img {
+    display: block;
+    margin: 0 auto; 
+    width: 150px;     
+    height: 220px;    
+    object-fit: cover; 
+}

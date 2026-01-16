@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once('connexion.php');
-
 require_once('securite_admin.php');
 
 // =============================
@@ -63,73 +62,61 @@ $emprunts = $stmt->fetchAll(PDO::FETCH_OBJ);
 <meta charset="UTF-8">
 <title>Gérer les emprunts</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-thead th {
-    background-color: #000 !important;
-    color: #fff !important;
-    text-transform: uppercase;
-}
-</style>
 </head>
 <body>
 
 <?php include('navbar.php'); ?>
 
 <div class="container mt-4">
-<h1 class="text-center mb-4">📚 Gestion des emprunts</h1>
+    <h1 class="text-center mb-4">📚 Gestion des emprunts</h1>
 
-<!-- Barre de recherche -->
-<div class="d-flex justify-content-center mb-4">
-    <form method="GET" class="d-flex align-items-center" role="search">
+    <!-- Barre de recherche -->
+    <form method="GET" class="d-flex align-items-center justify-content-center mb-4" role="search">
         <input
             type="search"
             name="search"
-            class="form-control me-3 rounded-pill"
+            class="form-control me-3 rounded-pill search-form"
             placeholder="Utilisateur, livre ou auteur..."
             value="<?= htmlspecialchars($search) ?>"
-            style="width: 520px; height: 38px; padding: 0 15px;"
         >
-        <button type="submit" class="btn btn-outline-primary rounded-pill px-4" style="height: 38px;">
+        <button type="submit" class="btn btn-outline-primary rounded-pill btn-search">
             🔍
         </button>
     </form>
-</div>
 
+    <!-- Tableau des emprunts -->
+    <table class="table table-striped text-center align-middle">
+        <thead>
+            <tr>
+                <th>Utilisateur</th>
+                <th>Livre</th>
+                <th>Auteur</th>
+                <th>Date emprunt</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($emprunts as $e): ?>
+            <tr>
+                <td><?= htmlspecialchars($e->mel) ?></td>
+                <td><?= htmlspecialchars($e->titre) ?></td>
+                <td><?= htmlspecialchars($e->prenom.' '.$e->nom) ?></td>
+                <td><?= date('d/m/Y', strtotime($e->dateemprunt)) ?></td>
+                <td>
+                    <a href="gere_les_emprunts.php?revoquer=<?= $e->nolivre ?>&mel=<?= urlencode($e->mel) ?>"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Révoquer cet emprunt ?');">
+                        Révoquer
+                    </a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 
-
-<!-- Tableau des emprunts -->
-<table class="table table-striped text-center align-middle">
-<thead>
-<tr>
-<th>Utilisateur</th>
-<th>Livre</th>
-<th>Auteur</th>
-<th>Date emprunt</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody>
-<?php foreach ($emprunts as $e): ?>
-<tr>
-<td><?= htmlspecialchars($e->mel) ?></td>
-<td><?= htmlspecialchars($e->titre) ?></td>
-<td><?= htmlspecialchars($e->prenom.' '.$e->nom) ?></td>
-<td><?= date('d/m/Y', strtotime($e->dateemprunt)) ?></td>
-<td>
-    <a href="gere_les_emprunts.php?revoquer=<?= $e->nolivre ?>&mel=<?= urlencode($e->mel) ?>"
-       class="btn btn-danger btn-sm"
-       onclick="return confirm('Révoquer cet emprunt ?');">
-        Révoquer
-    </a>
-</td>
-</tr>
-<?php endforeach; ?>
-</tbody>
-</table>
-
-<div class="text-center mt-3">
-    <a href="page_admin.php" class="btn btn-secondary">← Retour admin</a>
-</div>
+    <div class="text-center mt-3">
+        <a href="page_admin.php" class="btn btn-secondary btn-return">← Retour admin</a>
+    </div>
 
 </div>
 

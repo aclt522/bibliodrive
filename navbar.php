@@ -78,7 +78,7 @@ if (isset($_SESSION['mel'])) {
         <!-- Boutons connexion / profil -->
         <div class="d-flex align-items-center gap-2">
             <?php if (!isset($_SESSION['mel'])): ?>
-                <a class="btn btn-success" href="login.php">Connexion</a>
+                <a class="btn btn-warning" href="login.php">Connexion</a>
             <?php else: ?>
                 <a class="btn btn-danger" href="logout.php">Déconnexion</a>
                 <?php include 'infos_utilisateur.php'; ?>
